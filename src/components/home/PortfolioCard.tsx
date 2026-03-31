@@ -1,10 +1,12 @@
-import { TrendingUp } from "lucide-react-native";
+import { Feather } from "@expo/vector-icons";
 import { Text, View } from "react-native";
+import { GlassCard } from "../ui/GlassCard";
+const TrendingUp = (props: any) => <Feather name="trending-up" {...props} />;
 
 export function PortfolioCard() {
   return (
-    <View className="mx-5 rounded-2xl bg-surface dark:bg-dark-card border border-gray-100 dark:border-white/5 p-5">
-      <Text className="text-xs text-muted dark:text-gray-400 mb-1">
+    <GlassCard>
+      <Text className="text-xs text-bold text-muted dark:text-gray-400 mb-1">
         Total portfolio value
       </Text>
       <Text className="text-4xl font-semibold text-gray-900 dark:text-white tracking-tight">
@@ -20,7 +22,7 @@ export function PortfolioCard() {
       </View>
 
       {/* Divider */}
-      <View className="h-px bg-gray-100 dark:bg-white/5 my-4" />
+      <View className="h-px bg-gray-100 dark:bg-background dark:bg-dark-background/5 my-4" />
 
       {/* Meta row */}
       <View className="flex-row gap-6">
@@ -45,6 +47,6 @@ export function PortfolioCard() {
           <Text className="text-sm font-semibold text-gain">+$1,204.30</Text>
         </View>
       </View>
-    </View>
+    </GlassCard>
   );
 }

@@ -1,5 +1,7 @@
 import { useTheme } from "@/hooks/use-theme";
-import { Moon, Sun } from "lucide-react-native";
+import { Feather } from "@expo/vector-icons";
+const Moon = (props: any) => <Feather name="moon" {...props} />;
+const Sun = (props: any) => <Feather name="sun" {...props} />;
 import { Pressable } from "react-native";
 
 export function ThemeToggle() {
