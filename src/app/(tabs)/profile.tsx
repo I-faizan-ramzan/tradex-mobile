@@ -1,17 +1,13 @@
+import { TabHeader } from "@/components/basic/TabHeader";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
-import { ScreenHeader } from "@/components/profile/ScreenHeader";
+import { SettingsList } from "@/components/profile/SettingsList";
+
 import { useTheme } from "@/hooks/use-theme";
 import { router } from "expo-router";
-import { Feather } from "@expo/vector-icons";
-const ChevronRight = (props: any) => <Feather name="circle" {...props} />;
-const CreditCard = (props: any) => <Feather name="circle" {...props} />;
-const HelpCircle = (props: any) => <Feather name="circle" {...props} />;
-const Lock = (props: any) => <Feather name="circle" {...props} />;
-const LogOut = (props: any) => <Feather name="circle" {...props} />;
-const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
-const User = (props: any) => <Feather name="user" {...props} />;
-import { Pressable, Text, View } from "react-native";
+import { CreditCard, HelpCircle, Lock, User } from "lucide-react-native";
+import { View, Modal, TouchableOpacity, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useState } from "react";
 
 const SETTINGS = [
   { label: "Profile Setting", icon: User, route: "/profile/settings" },
@@ -22,78 +18,49 @@ const SETTINGS = [
 
 export default function ProfileScreen() {
   const { isDark } = useTheme();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const handleLogOut = () => {
+    setShowLogoutModal(false);
     // clear auth state here if you have it
-    router.replace("/(tabs)");
+    router.replace("/(auth)/login");
   };
 
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
       {/* Header */}
-      <ScreenHeader
-        title="Profile"
-        rightIcon={SlidersHorizontal}
-        onRightPress={() => console.log("Pressed")}
-      />
 
+      <TabHeader title="Profile" />
       {/* Avatar + info */}
       <ProfileHeader
-        name="John Wekintem"
-        email="Johnwekintem@email.com"
+        avatarUrl="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
+        name="Johan Wekitem"
+        email="Johanwekitem@email.com"
         phone="+00742874082328"
       />
 
       {/* Settings */}
-      <View className="px-5">
-        <Text className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-          Settings
-        </Text>
-        <View className="bg-surface dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-white/5 overflow-hidden">
-          {SETTINGS.map((item, i) => {
-            const Icon = item.icon;
-            return (
-              <Pressable
-                key={item.label}
-                onPress={() => router.push(item.route as any)}
-                className="flex-row items-center px-4 py-4"
-                style={{
-                  borderBottomWidth: i < SETTINGS.length - 1 ? 0.5 : 0,
-                  borderBottomColor: isDark
-                    ? "rgba(255,255,255,0.06)"
-                    : "rgba(0,0,0,0.06)",
-                }}
-              >
-                <View className="w-8 h-8 rounded-lg bg-accent/10 items-center justify-center mr-3">
-                  <Icon size={16} color="#4f8ef7" strokeWidth={1.6} />
-                </View>
-                <Text className="flex-1 text-sm font-medium text-gray-900 dark:text-white">
-                  {item.label}
-                </Text>
-                <ChevronRight
-                  size={16}
-                  color={isDark ? "#6b7280" : "#9ca3af"}
-                  strokeWidth={1.6}
-                />
-              </Pressable>
-            );
-          })}
-          <Pressable
-            onPress={handleLogOut}
-            className="flex-row items-center px-4 py-4 mt-3 bg-surface dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-white/5"
-          >
-            <View className="w-8 h-8 rounded-lg bg-loss/10 items-center justify-center mr-3">
-              <LogOut size={16} color="#ff5252" strokeWidth={1.6} />
-            </View>
-            <Text className="flex-1 text-sm font-medium text-loss">
-              Log Out
-            </Text>
-            <ChevronRight size={16} color="#ff5252" strokeWidth={1.6} />
-          </Pressable>
-        </View>
-
-        {/* Log Out — separate card */}
+      <View className=" bg-card dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-white/5 overflow-hidden shadow-md dark:shadow-none mx-5">
+        <SettingsList title="Settings" onLogoutPress={() => setShowLogoutModal(true)} />
       </View>
+
+      {/* Logout Modal */}
+      <Modal visible={showLogoutModal} transparent animationType="fade">
+        <View className="flex-1 bg-black/40 justify-center items-center">
+          <View className="bg-white dark:bg-[#1C1C1E] w-[85%] rounded-3xl p-6 items-center shadow-lg">
+            <Text className="text-xl font-bold text-gray-900 dark:text-white mb-4 mt-2">Log Out</Text>
+            <Text className="text-gray-500 mb-8 text-center text-[15px]">Are you sure you want to leave</Text>
+            
+            <TouchableOpacity className="w-[90%] bg-[#1E50FF] py-3.5 rounded-full items-center mb-4" onPress={handleLogOut}>
+              <Text className="text-white font-bold text-[15px]">Yes</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity className="w-[90%] bg-gray-200 dark:bg-[#2C2C2E] py-3.5 rounded-full items-center mb-2" onPress={() => setShowLogoutModal(false)}>
+              <Text className="text-gray-900 dark:text-white font-bold text-[15px]">No</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }

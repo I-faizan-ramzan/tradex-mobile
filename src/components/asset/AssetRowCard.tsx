@@ -1,7 +1,6 @@
 import { ASSETS } from "@/data/assets";
 import { Asset } from "@/types/asset";
-import { FlatList } from "react-native";
-import { GlassCard } from "../ui/GlassCard";
+import { FlatList, View } from "react-native";
 import { AssetRow } from "./AssetRow";
 const DATA: Asset[] = [
   {
@@ -52,7 +51,7 @@ const DATA: Asset[] = [
 
 export function AssetRowCard() {
   return (
-    <GlassCard>
+    <View>
       <FlatList
         data={ASSETS}
         keyExtractor={(item) => item.id}
@@ -60,10 +59,10 @@ export function AssetRowCard() {
           <AssetRow
             className=""
             asset={item}
-            onPress={(asset) => router.push(`/stock/${asset.ticker}`)}
+            // onPress={(asset) => router.push(`/stock/${asset.ticker}`)}
           />
         )}
       />
-    </GlassCard>
+    </View>
   );
 }

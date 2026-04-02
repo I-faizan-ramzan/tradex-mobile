@@ -1,38 +1,28 @@
-import { AssetRow } from "@/components/home/AssetRow";
+import { AssetRow } from "@/components/asset/AssetRow";
+import { TabHeader } from "@/components/basic/TabHeader";
 import { SegmentedToggle } from "@/components/wallet/SegmentedToggle";
 import { ASSETS } from "@/data/assets";
 import { useTheme } from "@/hooks/use-theme";
+import { useStore } from "@/store/useStore";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
 
 export default function WalletScreen() {
-  const [active, setActive] = useState<"deposit" | "withdraw">("deposit");
   const { isDark } = useTheme();
+  const setSelectedAsset = useStore((state) => state.setSelectedAsset);
 
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
+      {/* Header */}
+      <TabHeader title="Wallet" />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
       >
-        {/* Header */}
-        <View className="flex-row items-center justify-between px-5 pt-2 pb-5">
-          <Text className="text-2xl font-semibold text-gray-900 dark:text-white">
-            Wallet
-          </Text>
-          <Pressable className="w-9 h-9 rounded-full bg-surface dark:bg-dark-card border border-gray-100 dark:border-white/10 items-center justify-center">
-            <SlidersHorizontal
-              size={16}
-              color={isDark ? "#f0f2f7" : "#0a0c10"}
-              strokeWidth={1.6}
-            />
-          </Pressable>
-        </View>
-
         {/* Portfolio gradient card */}
         <View className="mx-5 rounded-2xl overflow-hidden mb-5">
           <LinearGradient
@@ -59,26 +49,50 @@ export default function WalletScreen() {
           </LinearGradient>
         </View>
 
-        {/* Deposit / Withdraw toggle */}
-
-        <SegmentedToggle
-          className="mx-5"
-          options={[
-            { label: "Deposit", value: "deposit" },
-            { label: "Withdraw", value: "withdraw" },
-          ]}
-          value={active}
-          onChange={setActive}
-        />
+        {/* Deposit / Withdraw Action Buttons */}
+        <View className="flex-row gap-4 mx-5 mb-5 mt-2">
+          <TouchableOpacity 
+            onPress={() => router.push('/wallet/deposit')} 
+            className="flex-1 bg-primary dark:bg-white p-4 rounded-full items-center shadow-md dark:shadow-none"
+          >
+            <Text className="text-white dark:text-black font-bold text-base">Deposit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            onPress={() => router.push('/wallet/withdraw')} 
+            className="flex-1 bg-surface dark:bg-dark-card border border-gray-100 dark:border-white/5 p-4 rounded-full items-center shadow-md dark:shadow-none"
+          >
+            <Text className="text-gray-900 dark:text-white font-bold text-base">Withdraw</Text>
+          </TouchableOpacity>
+        </View>
 
         {/* Assets list */}
-        <View className="mx-5">
-          <Text className="text-lg font-semibold text-gray-900 dark:text-white my-4 ">
+        <View className="mt-2 pb-5">
+          <Text className="px-5 text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Your Asset
           </Text>
-          <View className=" bg-surface dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-white/5 overflow-hidden ">
-            {ASSETS.map((asset, i) => (
-              <AssetRow key={asset.ticker} asset={asset} className="" />
+          <View className="mb-2">
+            {ASSETS.map((asset, index) => (
+              <View
+                 key={asset.ticker}
+                 className={`mx-5 bg-card dark:bg-dark-card shadow-sm dark:shadow-none
+                 ${index === 0 ? "rounded-t-2xl" : ""}
+                 ${index === ASSETS.length - 1 ? "rounded-b-2xl" : ""}
+                 border-x border-gray-100 dark:border-white/5
+                 ${index === 0 ? "border-t" : ""}
+                 ${index === ASSETS.length - 1 ? "border-b" : ""}
+                 `}
+              >
+                  <AssetRow
+                    asset={asset}
+                    onPress={() => {
+                      setSelectedAsset(asset);
+                      router.push(`/stock/${asset.ticker}`);
+                    }}
+                  />
+                  {index !== ASSETS.length - 1 && (
+                      <View className="border-b border-gray-100 dark:border-white/5" />
+                  )}
+              </View>
             ))}
           </View>
         </View>

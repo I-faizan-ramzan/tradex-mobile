@@ -5,6 +5,8 @@ import Animated from "react-native-reanimated";
 import { ASSETS } from "@/data/assets"; // ✅ import your assets
 import { Asset } from "@/types/asset";
 import { AssetItem } from "./AssetItem";
+import { router } from "expo-router";
+import { useStore } from "@/store/useStore";
 
 const { width } = Dimensions.get("window");
 
@@ -20,6 +22,7 @@ type Props = {
 export function AssetsCarousel({ autoPlay = true, interval = 5000 }: Props) {
   const listRef = useRef<Animated.FlatList<Asset>>(null);
   const [pageIndex, setPageIndex] = useState(0);
+  const setSelectedAsset = useStore((state) => state.setSelectedAsset);
 
   const data = ASSETS; // ✅ use ASSETS directly
   const loopData = [...data, ...data]; // for infinite loop
@@ -71,7 +74,13 @@ export function AssetsCarousel({ autoPlay = true, interval = 5000 }: Props) {
               marginHorizontal: SPACING,
             }}
           >
-            <AssetItem asset={item} />
+            <AssetItem 
+              asset={item} 
+              onPress={() => {
+                setSelectedAsset(item);
+                router.push(`/stock/${item.ticker}`);
+              }} 
+            />
           </View>
         )}
       />
@@ -83,7 +92,7 @@ export function AssetsCarousel({ autoPlay = true, interval = 5000 }: Props) {
             key={i}
             className={`h-2 rounded-full ${
               i === pageIndex
-                ? "w-3 bg-gray-900 dark:bg-background dark:bg-dark-background"
+                ? "w-4 bg-gray-900 dark:bg-gray-600 dark:bg-dark-background"
                 : "w-2 bg-gray-300 dark:bg-gray-600"
             }`}
           />

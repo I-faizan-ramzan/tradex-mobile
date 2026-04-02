@@ -1,9 +1,9 @@
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTheme } from "@/hooks/use-theme";
 import { Feather } from "@expo/vector-icons";
-const Bell = (props: any) => <Feather name="bell" {...props} />;
 import { ReactNode } from "react";
 import { Image, Pressable, Text, View } from "react-native";
+const Bell = (props: any) => <Feather name="bell" {...props} />;
 
 type AppHeaderProps = {
   name: string;
@@ -23,12 +23,12 @@ export function AppHeader({
   const { isDark } = useTheme();
 
   return (
-    <View className="flex-row items-center justify-between px-5 pt-2 pb-4">
+    <View className="flex-row  items-center justify-between px-5 pt-2 pb-4">
       {/* Left Section */}
       <View className="flex-row items-center gap-3">
-        <View className="w-9 h-9 rounded-full bg-accent items-center justify-center overflow-hidden">
+        <View className="w-10 h-10 rounded-full bg-accent items-center justify-center overflow-hidden">
           {avatar ? (
-            <Image source={avatar} className="w-full h-full" />
+            <Image source={avatar} className="w-full h-full" style={{ width: 40, height: 40 }} />
           ) : (
             <Text className="text-white text-sm font-semibold">
               {name?.charAt(0)}

@@ -5,15 +5,16 @@ import { Image, Pressable, Text, View } from "react-native";
 
 type Props = {
   asset: Asset;
+  onPress?: (asset: Asset) => void;
 };
 
-export function AssetItem({ asset }: Props) {
+export function AssetItem({ asset, onPress }: Props) {
   const { isDark } = useTheme();
 
   return (
     <Pressable
-      onPress={asset.onPress}
-      className="w-36 rounded-2xl p-4 mx-5 rounded-2xl dark:bg-dark-card border border-gray-100 dark:border-white/5 bg-surface"
+      onPress={() => onPress?.(asset)}
+      className="w-36 rounded-2xl p-4 mx-5 rounded-2xl dark:bg-dark-card border border-gray-100 dark:border-white/5 bg-card "
     >
       {/* Top Row */}
       <View className="flex-row items-center justify-between mb-4">
@@ -23,7 +24,7 @@ export function AssetItem({ asset }: Props) {
        h-28 rounded-xl  dark: items-center justify-center overflow-hidden"
         >
           {asset.logo ? (
-            <Image source={asset.logo} className="w-28 h-28" />
+            <Image source={asset.logo} className="w-24 h-24" style={{ width: 96, height: 96 }} resizeMode="contain" />
           ) : (
             <Text className="text-xl font-bold text-gray-700 dark:text-white">
               {asset.ticker.slice(0, 2)}

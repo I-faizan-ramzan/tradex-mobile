@@ -8,10 +8,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter_400Regular", "sans-serif"],
-        medium: ["Inter_500Medium", "sans-serif"],
-        semibold: ["Inter_600SemiBold", "sans-serif"],
-        bold: ["Inter_700Bold", "sans-serif"],
+        sans: ["OpenSans_400Regular"],
+        medium: ["OpenSans_500Medium"],
+        semi: ["OpenSans_600SemiBold"],
+        bold: ["OpenSans_700Bold"],
       },
       colors: {
         // Light

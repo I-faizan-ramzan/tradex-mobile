@@ -1,16 +1,20 @@
-import { AssetRow } from "@/components/home/AssetRow";
+import { AssetRow } from "@/components/asset/AssetRow";
+import { TabHeader } from "@/components/basic/TabHeader";
 import { SegmentSelector } from "@/components/trading/favorite/SegmentSelector";
 import { ASSETS } from "@/data/assets";
 import { useTheme } from "@/hooks/use-theme";
 import { Feather } from "@expo/vector-icons";
-const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
+import { router } from "expo-router";
 import { useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useStore } from "@/store/useStore";
+const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
 
 export default function TradingScreen() {
   const [active, setActive] = useState("favorites");
   const { isDark } = useTheme();
+  const setSelectedAsset = useStore((state) => state.setSelectedAsset);
   const options = [
     {
       label: "All",
@@ -31,23 +35,12 @@ export default function TradingScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
+      <TabHeader title="Trading" />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
       >
         {/* Header */}
-        <View className="flex-row items-center justify-between px-5 pt-2 pb-5">
-          <Text className="text-2xl font-semibold text-gray-900 dark:text-white">
-            Trading
-          </Text>
-          <Pressable className="w-9 h-9 rounded-full bg-surface dark:bg-dark-card border border-gray-100 dark:border-white/10 items-center justify-center">
-            <SlidersHorizontal
-              size={16}
-              color={isDark ? "#f0f2f7" : "#0a0c10"}
-              strokeWidth={1.6}
-            />
-          </Pressable>
-        </View>
 
         {/* Favorite tab */}
 
@@ -60,13 +53,33 @@ export default function TradingScreen() {
         </View>
 
         {/* Assets list */}
-        <View className="px-5">
-          <Text className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+        <View className="mt-2 pb-5">
+          <Text className="px-5 text-lg font-semibold text-gray-900 dark:text-white mb-4">
             Top Market
           </Text>
-          <View className="bg-surface dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-white/5 overflow-hidden">
-            {ASSETS.map((asset, i) => (
-              <AssetRow className="" key={asset.ticker} asset={asset} />
+          <View className="mb-2">
+            {ASSETS.map((asset, index) => (
+              <View
+                 key={asset.ticker}
+                 className={`mx-5 bg-card dark:bg-dark-card shadow-sm dark:shadow-none
+                 ${index === 0 ? "rounded-t-2xl" : ""}
+                 ${index === ASSETS.length - 1 ? "rounded-b-2xl" : ""}
+                 border-x border-gray-100 dark:border-white/5
+                 ${index === 0 ? "border-t" : ""}
+                 ${index === ASSETS.length - 1 ? "border-b" : ""}
+                 `}
+              >
+                  <AssetRow
+                    asset={asset}
+                    onPress={() => {
+                      setSelectedAsset(asset);
+                      router.push(`/stock/${asset.ticker}`);
+                    }}
+                  />
+                  {index !== ASSETS.length - 1 && (
+                      <View className="border-b border-gray-100 dark:border-white/5" />
+                  )}
+              </View>
             ))}
           </View>
         </View>

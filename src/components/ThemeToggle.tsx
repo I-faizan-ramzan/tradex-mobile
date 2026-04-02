@@ -1,23 +1,23 @@
 import { useTheme } from "@/hooks/use-theme";
-import { Feather } from "@expo/vector-icons";
-const Moon = (props: any) => <Feather name="moon" {...props} />;
-const Sun = (props: any) => <Feather name="sun" {...props} />;
+import { Ionicons } from "@expo/vector-icons";
 import { Pressable } from "react-native";
 
 export function ThemeToggle() {
-  const { isDark, toggleTheme, border, card } = useTheme();
+  const { isDark, toggleTheme, card } = useTheme();
+
+  const iconColor = isDark ? "#f0f2f7" : "#0a0c10";
 
   return (
     <Pressable
       onPress={toggleTheme}
-      style={{ borderColor: border, backgroundColor: card }}
-      className="w-9 h-9 rounded-full items-center justify-center border"
+      style={{ backgroundColor: card }}
+      className="w-9 h-9 rounded-full items-center justify-center border border-gray-100 dark:border-white/10"
     >
-      {isDark ? (
-        <Sun size={16} color="#f0f2f7" strokeWidth={1.8} />
-      ) : (
-        <Moon size={16} color="#0a0c10" strokeWidth={1.8} />
-      )}
+      <Ionicons
+        name={isDark ? "sunny-outline" : "moon-outline"}
+        size={24}
+        color={iconColor}
+      />
     </Pressable>
   );
 }

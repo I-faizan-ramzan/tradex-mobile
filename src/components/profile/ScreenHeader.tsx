@@ -1,63 +1,74 @@
 import { useTheme } from "@/hooks/use-theme";
-import { Feather } from "@expo/vector-icons";
-type LucideIcon = any;
+import { Ionicons } from "@expo/vector-icons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Pressable, Text, View } from "react-native";
+
+type IconType = "ionicons" | "fontawesome";
+
+type IconProps = {
+  type: IconType;
+  name: keyof typeof Ionicons.glyphMap | keyof typeof FontAwesome.glyphMap;
+};
 
 type Props = {
   title: string;
 
-  // Left side
-  leftIcon?: LucideIcon;
+  leftIcon?: IconProps;
   onLeftPress?: () => void;
 
-  // Right side
-  rightIcon?: LucideIcon;
+  rightIcon?: IconProps;
   onRightPress?: () => void;
 };
 
+function renderIcon(icon: IconProps | undefined, color: string) {
+  if (!icon) return null;
+
+  switch (icon.type) {
+    case "ionicons":
+      return <Ionicons name={icon.name as any} size={24} color={color} />;
+    case "fontawesome":
+      return <FontAwesome name={icon.name as any} size={24} color={color} />;
+    default:
+      return null;
+  }
+}
+
 export function ScreenHeader({
   title,
-  leftIcon: LeftIcon,
+  leftIcon,
   onLeftPress,
-  rightIcon: RightIcon,
+  rightIcon,
   onRightPress,
 }: Props) {
   const { isDark } = useTheme();
+  const iconColor = isDark ? "#f0f2f7" : "#0a0c10";
 
   return (
-    <View className="flex-row items-center justify-between px-5 pt-2 pb-6">
+    <View className="flex-row items-center px-5 pt-2 pb-6">
       {/* Left */}
-      {LeftIcon ? (
+      {leftIcon ? (
         <Pressable
           onPress={onLeftPress}
-          className="w-9 h-9 rounded-full bg-surface dark:bg-dark-card border border-gray-100 dark:border-white/10 items-center justify-center"
+          className="w-9 h-9 rounded-full  items-center justify-center"
         >
-          <LeftIcon
-            size={16}
-            color={isDark ? "#f0f2f7" : "#0a0c10"}
-            strokeWidth={1.6}
-          />
+          {renderIcon(leftIcon, iconColor)}
         </Pressable>
       ) : (
         <View className="w-9 h-9" />
       )}
 
       {/* Title */}
-      <Text className="text-lg font-semibold text-gray-900 dark:text-white">
+      <Text className="flex-1 text-lg font-semibold text-gray-900 dark:text-white text-center">
         {title}
       </Text>
 
       {/* Right */}
-      {RightIcon ? (
+      {rightIcon ? (
         <Pressable
           onPress={onRightPress}
-          className="w-9 h-9 rounded-full bg-surface dark:bg-dark-card border border-gray-100 dark:border-white/10 items-center justify-center"
+          className="w-9 h-9 rounded-full  items-center justify-center"
         >
-          <RightIcon
-            size={16}
-            color={isDark ? "#f0f2f7" : "#0a0c10"}
-            strokeWidth={1.6}
-          />
+          {renderIcon(rightIcon, iconColor)}
         </Pressable>
       ) : (
         <View className="w-9 h-9" />

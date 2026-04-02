@@ -1,12 +1,12 @@
-import { AssetRow } from "@/components/home/AssetRow";
+import { AssetRow } from "@/components/asset/AssetRow";
 import { ASSETS } from "@/data/assets";
 import { useTheme } from "@/hooks/use-theme";
-import { LinearGradient } from "expo-linear-gradient";
 import { Feather } from "@expo/vector-icons";
-const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
+import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
 
 export default function WalletScreen() {
   const [active, setActive] = useState<"deposit" | "withdraw">("deposit");

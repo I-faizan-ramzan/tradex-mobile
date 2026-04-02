@@ -1,9 +1,9 @@
 import { useTheme } from "@/hooks/use-theme";
 import { Feather } from "@expo/vector-icons";
-const User = (props: any) => <Feather name="user" {...props} />;
-type LucideIcon = any;
 import { Image, Text, View } from "react-native";
 import { Button } from "../inputs/Button";
+const User = (props: any) => <Feather name="user" {...props} />;
+type LucideIcon = any;
 
 type Props = {
   name: string;
@@ -35,6 +35,7 @@ export function ProfileHeader({
           <Image
             source={{ uri: avatarUrl }}
             style={{ width: "100%", height: "100%" }}
+            className="rounded-full  items-center justify-center "
           />
         ) : (
           <FallbackIcon size={36} color="#4f8ef7" strokeWidth={1.4} />

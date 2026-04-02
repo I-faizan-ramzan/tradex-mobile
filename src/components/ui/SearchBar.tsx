@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Pressable, TextInput, View } from "react-native";
 
 type Props = {
@@ -16,39 +16,43 @@ export function SearchBar({
   onSubmit,
 }: Props) {
   const [focused, setFocused] = useState(false);
-
+  const inputRef = useRef<TextInput>(null);
   return (
-    <View
-      className={`flex-row items-center px-4 py-3 rounded-2xl border ${
-        focused ? "border-primary" : "border-gray-200 dark:border-white/10"
-      } bg-gray-100 dark:bg-dark-card`}
+    <Pressable // ✅ changed View → Pressable so tapping anywhere in bar focuses input
+      onPress={() => inputRef.current?.focus()}
     >
-      {/* Icon */}
-      <Ionicons
-        name="search"
-        size={18}
-        color={focused ? "#563fc2" : "#9ca3af"}
-      />
+      <View
+        className={`flex-row items-center px-4 py-3 rounded-full border
+          ${focused ? "border-accent" : "border-gray-200 dark:border-white/10"}
+          bg-surface dark:bg-dark-card`}
+      >
+        <Ionicons
+          name="search"
+          size={20}
+          color={focused ? "#4f8ef7" : "#9ca3af"}
+        />
 
-      {/* Input */}
-      <TextInput
-        value={value}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
-        placeholderTextColor="#9ca3af"
-        className="flex-1 ml-2 text-gray-900 dark:text-white"
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        returnKeyType="search"
-        onSubmitEditing={onSubmit}
-      />
+        <TextInput
+          ref={inputRef} // ✅ add ref
+          value={value}
+          onChangeText={onChangeText}
+          placeholder={placeholder}
+          placeholderTextColor="#9ca3af"
+          className="flex-1 ml-2 text-sm text-gray-900 dark:text-white"
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          returnKeyType="search"
+          onSubmitEditing={onSubmit}
+          autoCorrect={false} // ✅ prevents autocorrect stealing focus
+          autoCapitalize="none" // ✅ prevents caps interfering
+        />
 
-      {/* Optional Clear Button */}
-      {value ? (
-        <Pressable onPress={() => onChangeText?.("")}>
-          <Ionicons name="close-circle" size={18} color="#9ca3af" />
-        </Pressable>
-      ) : null}
-    </View>
+        {value ? (
+          <Pressable onPress={() => onChangeText?.("")} hitSlop={8}>
+            <Ionicons name="close-circle" size={18} color="#9ca3af" />
+          </Pressable>
+        ) : null}
+      </View>
+    </Pressable>
   );
 }
