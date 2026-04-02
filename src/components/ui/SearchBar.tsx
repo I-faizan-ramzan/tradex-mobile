@@ -18,13 +18,11 @@ export function SearchBar({
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<TextInput>(null);
   return (
-    <Pressable // ✅ changed View → Pressable so tapping anywhere in bar focuses input
-      onPress={() => inputRef.current?.focus()}
-    >
+    <Pressable onPress={() => inputRef.current?.focus()}>
       <View
-        className={`flex-row items-center px-4 py-3 rounded-full border
+        className={`flex-row items-center px-4 py-4 rounded-full  bg-surface
           ${focused ? "border-accent" : "border-gray-200 dark:border-white/10"}
-          bg-surface dark:bg-dark-card`}
+           dark:bg-dark-card`}
       >
         <Ionicons
           name="search"
@@ -33,7 +31,7 @@ export function SearchBar({
         />
 
         <TextInput
-          ref={inputRef} // ✅ add ref
+          ref={inputRef}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
@@ -43,13 +41,13 @@ export function SearchBar({
           onBlur={() => setFocused(false)}
           returnKeyType="search"
           onSubmitEditing={onSubmit}
-          autoCorrect={false} // ✅ prevents autocorrect stealing focus
-          autoCapitalize="none" // ✅ prevents caps interfering
+          autoCorrect={false}
+          autoCapitalize="none"
         />
 
         {value ? (
           <Pressable onPress={() => onChangeText?.("")} hitSlop={8}>
-            <Ionicons name="close-circle" size={18} color="#9ca3af" />
+            <Ionicons name="close-circle" size={20} color="#f70808" />
           </Pressable>
         ) : null}
       </View>

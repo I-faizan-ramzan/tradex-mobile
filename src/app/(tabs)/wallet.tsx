@@ -1,13 +1,12 @@
 import { AssetRow } from "@/components/asset/AssetRow";
 import { TabHeader } from "@/components/basic/TabHeader";
-import { SegmentedToggle } from "@/components/wallet/SegmentedToggle";
 import { ASSETS } from "@/data/assets";
 import { useTheme } from "@/hooks/use-theme";
 import { useStore } from "@/store/useStore";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { router } from "expo-router";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
 
@@ -18,7 +17,10 @@ export default function WalletScreen() {
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
       {/* Header */}
-      <TabHeader title="Wallet" />
+      <TabHeader
+        title="Wallet"
+        onRightPress={() => router.push("/(tabs)/profile")}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
@@ -51,17 +53,21 @@ export default function WalletScreen() {
 
         {/* Deposit / Withdraw Action Buttons */}
         <View className="flex-row gap-4 mx-5 mb-5 mt-2">
-          <TouchableOpacity 
-            onPress={() => router.push('/wallet/deposit')} 
-            className="flex-1 bg-primary dark:bg-white p-4 rounded-full items-center shadow-md dark:shadow-none"
+          <TouchableOpacity
+            onPress={() => router.push("/wallet/deposit")}
+            className="flex-1 bg-accent dark:bg-white p-4 rounded-full items-center shadow-md dark:shadow-none"
           >
-            <Text className="text-white dark:text-black font-bold text-base">Deposit</Text>
+            <Text className="text-white dark:text-black font-bold text-base">
+              Deposit
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity 
-            onPress={() => router.push('/wallet/withdraw')} 
-            className="flex-1 bg-surface dark:bg-dark-card border border-gray-100 dark:border-white/5 p-4 rounded-full items-center shadow-md dark:shadow-none"
+          <TouchableOpacity
+            onPress={() => router.push("/wallet/withdraw")}
+            className="flex-1 bg-primary dark:bg-dark-card border border-gray-100 dark:border-white/5 p-4 rounded-full items-center shadow-md dark:shadow-none"
           >
-            <Text className="text-gray-900 dark:text-white font-bold text-base">Withdraw</Text>
+            <Text className="text-gray-900 dark:text-white font-bold text-white">
+              Withdraw
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -73,8 +79,8 @@ export default function WalletScreen() {
           <View className="mb-2">
             {ASSETS.map((asset, index) => (
               <View
-                 key={asset.ticker}
-                 className={`mx-5 bg-card dark:bg-dark-card shadow-sm dark:shadow-none
+                key={asset.ticker}
+                className={`mx-5 bg-card dark:bg-dark-card shadow-sm dark:shadow-none
                  ${index === 0 ? "rounded-t-2xl" : ""}
                  ${index === ASSETS.length - 1 ? "rounded-b-2xl" : ""}
                  border-x border-gray-100 dark:border-white/5
@@ -82,16 +88,16 @@ export default function WalletScreen() {
                  ${index === ASSETS.length - 1 ? "border-b" : ""}
                  `}
               >
-                  <AssetRow
-                    asset={asset}
-                    onPress={() => {
-                      setSelectedAsset(asset);
-                      router.push(`/stock/${asset.ticker}`);
-                    }}
-                  />
-                  {index !== ASSETS.length - 1 && (
-                      <View className="border-b border-gray-100 dark:border-white/5" />
-                  )}
+                <AssetRow
+                  asset={asset}
+                  onPress={() => {
+                    setSelectedAsset(asset);
+                    router.push(`/stock/${asset.ticker}`);
+                  }}
+                />
+                {index !== ASSETS.length - 1 && (
+                  <View className="border-b border-gray-100 dark:border-white/5" />
+                )}
               </View>
             ))}
           </View>

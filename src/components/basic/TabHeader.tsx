@@ -1,4 +1,3 @@
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTheme } from "@/hooks/use-theme";
 import { Ionicons } from "@expo/vector-icons";
 import { Pressable, Text, View } from "react-native";
@@ -23,7 +22,7 @@ export function TabHeader({ title, onRightPress }: Props) {
       {/* Right Section */}
       <View className="flex-row items-center gap-2">
         {/* Theme Toggle */}
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
 
         {/* Right Icon Button */}
 

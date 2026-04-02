@@ -36,7 +36,9 @@ export function SegmentedToggle({
           >
             <Text
               className={`text-sm font-semibold ${
-                isActive ? "text-white" : "text-gray-400 dark:text-muted dark:text-gray-400 font-medium"
+                isActive
+                  ? "text-white"
+                  : "text-gray-400 dark:text-muted dark:text-gray-400 font-medium"
               }`}
             >
               {item.label}

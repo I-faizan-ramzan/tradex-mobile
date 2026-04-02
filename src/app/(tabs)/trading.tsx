@@ -1,14 +1,15 @@
 import { AssetRow } from "@/components/asset/AssetRow";
 import { TabHeader } from "@/components/basic/TabHeader";
 import { SegmentSelector } from "@/components/trading/favorite/SegmentSelector";
+
 import { ASSETS } from "@/data/assets";
 import { useTheme } from "@/hooks/use-theme";
+import { useStore } from "@/store/useStore";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useStore } from "@/store/useStore";
 const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
 
 export default function TradingScreen() {
@@ -35,7 +36,10 @@ export default function TradingScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
-      <TabHeader title="Trading" />
+      <TabHeader
+        title="Trading"
+        onRightPress={() => router.push("/(tabs)/profile")}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
@@ -60,8 +64,8 @@ export default function TradingScreen() {
           <View className="mb-2">
             {ASSETS.map((asset, index) => (
               <View
-                 key={asset.ticker}
-                 className={`mx-5 bg-card dark:bg-dark-card shadow-sm dark:shadow-none
+                key={asset.ticker}
+                className={`mx-5 bg-card dark:bg-dark-card shadow-sm dark:shadow-none
                  ${index === 0 ? "rounded-t-2xl" : ""}
                  ${index === ASSETS.length - 1 ? "rounded-b-2xl" : ""}
                  border-x border-gray-100 dark:border-white/5
@@ -69,16 +73,16 @@ export default function TradingScreen() {
                  ${index === ASSETS.length - 1 ? "border-b" : ""}
                  `}
               >
-                  <AssetRow
-                    asset={asset}
-                    onPress={() => {
-                      setSelectedAsset(asset);
-                      router.push(`/stock/${asset.ticker}`);
-                    }}
-                  />
-                  {index !== ASSETS.length - 1 && (
-                      <View className="border-b border-gray-100 dark:border-white/5" />
-                  )}
+                <AssetRow
+                  asset={asset}
+                  onPress={() => {
+                    setSelectedAsset(asset);
+                    router.push(`/stock/${asset.ticker}`);
+                  }}
+                />
+                {index !== ASSETS.length - 1 && (
+                  <View className="border-b border-gray-100 dark:border-white/5" />
+                )}
               </View>
             ))}
           </View>

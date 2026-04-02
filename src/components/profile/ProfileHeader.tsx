@@ -9,10 +9,9 @@ type Props = {
   name: string;
   email?: string;
   phone?: string;
-  avatarUrl?: string;
+  avatarUrl?: any;
   fallbackIcon?: LucideIcon;
 
-  // ✅ New props
   showChangePhoto?: boolean;
   onChangePhotoPress?: () => void;
 };
@@ -30,10 +29,10 @@ export function ProfileHeader({
   return (
     <View className="items-center mb-10">
       {/* Avatar */}
-      <View className="w-20 h-20 rounded-full bg-surface dark:bg-dark-card border-2 border-accent items-center justify-center mb-3 overflow-hidden">
+      <View className="w-20 h-20 rounded-full bg-surface dark:bg-dark-card   items-center justify-center mb-3 overflow-hidden">
         {avatarUrl ? (
           <Image
-            source={{ uri: avatarUrl }}
+            source={avatarUrl}
             style={{ width: "100%", height: "100%" }}
             className="rounded-full  items-center justify-center "
           />
@@ -47,7 +46,7 @@ export function ProfileHeader({
         <Button
           title="Change Photo"
           variant="primary"
-          bgClass="bg-accent rounded-full my-2"
+          bgClass="bg-accent rounded-full my-2 "
           onPress={() => {
             console.log("change photo");
           }}

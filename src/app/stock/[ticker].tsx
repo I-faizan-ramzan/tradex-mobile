@@ -1,11 +1,11 @@
+import { MiniChart } from "@/components/charts/MiniChart";
 import { ASSETS } from "@/data/assets";
+import { useStore } from "@/store/useStore";
 import { formatPercent, formatPrice } from "@/utils/format";
 import { router, useLocalSearchParams } from "expo-router";
+import { ChevronLeft } from "lucide-react-native";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ChevronLeft } from "lucide-react-native";
-import { MiniChart } from "@/components/charts/MiniChart";
-import { useStore } from "@/store/useStore";
 
 export default function StockDetailScreen() {
   const { ticker } = useLocalSearchParams<{ ticker: string }>();
@@ -73,16 +73,16 @@ export default function StockDetailScreen() {
             About {asset.name}
           </Text>
           <Text className="text-gray-600 dark:text-gray-400 leading-6">
-            This is a dummy description for the UI design of the stock trading application.
-            Currently rendering the properties and dummy chart for {asset.name}. This view
-            is complete with dynamic lighting and shadows.
+            This is a dummy description for the UI design of the stock trading
+            application. Currently rendering the properties and dummy chart for{" "}
+            {asset.name}.
           </Text>
         </View>
       </ScrollView>
 
       {/* Sticky Bottom Button */}
       <View className="px-5 py-4 border-t border-gray-100 dark:border-white/5 bg-white dark:bg-dark-background">
-        <TouchableOpacity className="bg-primary dark:bg-white w-full rounded-full py-4 shadow-lg active:opacity-80 flex-row justify-center items-center">
+        <TouchableOpacity className="bg-accent dark:bg-white w-full rounded-full py-4 shadow-lg active:opacity-80 flex-row justify-center items-center">
           <Text className="text-white dark:text-black font-bold text-lg text-center">
             Trade {asset.ticker}
           </Text>

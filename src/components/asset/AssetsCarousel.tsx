@@ -3,10 +3,10 @@ import { Dimensions, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 import { ASSETS } from "@/data/assets"; // ✅ import your assets
-import { Asset } from "@/types/asset";
-import { AssetItem } from "./AssetItem";
-import { router } from "expo-router";
 import { useStore } from "@/store/useStore";
+import { Asset } from "@/types/asset";
+import { router } from "expo-router";
+import { AssetItem } from "./AssetItem";
 
 const { width } = Dimensions.get("window");
 
@@ -58,7 +58,7 @@ export function AssetsCarousel({ autoPlay = true, interval = 5000 }: Props) {
         bounces={false}
         decelerationRate="fast"
         snapToInterval={(ITEM_WIDTH + SPACING) * ITEMS_PER_PAGE}
-        contentContainerStyle={{ paddingHorizontal: SPACING }}
+        contentContainerStyle={{ gap: 20 }}
         onMomentumScrollEnd={(e) => {
           const offset = e.nativeEvent.contentOffset.x;
           const currentPage = Math.round(
@@ -70,16 +70,14 @@ export function AssetsCarousel({ autoPlay = true, interval = 5000 }: Props) {
           <View
             style={{
               width: ITEM_WIDTH,
-
-              marginHorizontal: SPACING,
             }}
           >
-            <AssetItem 
-              asset={item} 
+            <AssetItem
+              asset={item}
               onPress={() => {
                 setSelectedAsset(item);
                 router.push(`/stock/${item.ticker}`);
-              }} 
+              }}
             />
           </View>
         )}

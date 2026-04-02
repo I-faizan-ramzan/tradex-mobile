@@ -1,4 +1,3 @@
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTheme } from "@/hooks/use-theme";
 import { Feather } from "@expo/vector-icons";
 import { ReactNode } from "react";
@@ -28,7 +27,11 @@ export function AppHeader({
       <View className="flex-row items-center gap-3">
         <View className="w-10 h-10 rounded-full bg-accent items-center justify-center overflow-hidden">
           {avatar ? (
-            <Image source={avatar} className="w-full h-full" style={{ width: 40, height: 40 }} />
+            <Image
+              source={avatar}
+              className="w-full h-full"
+              style={{ width: 40, height: 40 }}
+            />
           ) : (
             <Text className="text-white text-sm font-semibold">
               {name?.charAt(0)}
@@ -51,8 +54,6 @@ export function AppHeader({
         rightContent
       ) : (
         <View className="flex-row items-center gap-2">
-          <ThemeToggle />
-
           <Pressable
             onPress={onNotificationPress}
             className="w-9 h-9 rounded-full bg-surface dark:bg-dark-card items-center justify-center border border-gray-100 dark:border-white/10"

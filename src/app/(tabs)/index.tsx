@@ -1,15 +1,14 @@
-
 import { AppHeader } from "@/components/AppHeader";
 import { AssetRow } from "@/components/asset/AssetRow";
 import { AssetsCarousel } from "@/components/asset/AssetsCarousel";
 import { useTheme } from "@/components/ThemeProvider";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ASSETS } from "@/data/assets";
-import { useState } from "react";
-import { ScrollView, Keyboard, Text, View, Pressable } from "react-native";
-import { router } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useStore } from "@/store/useStore";
+import { router } from "expo-router";
+import { useState } from "react";
+import { Keyboard, Pressable, ScrollView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   const { isDark } = useTheme();
@@ -20,24 +19,25 @@ export default function HomeScreen() {
   let displayedAssets: typeof ASSETS = [];
   if (activeTab === 0) {
     displayedAssets = ASSETS.filter((item) =>
-      item.name.toLowerCase().includes(search.toLowerCase())
+      item.name.toLowerCase().includes(search.toLowerCase()),
     );
   }
 
   const HOME_TABS = ["Trending", "News", "Top Market"];
 
   return (
-    <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
+    <SafeAreaView className="flex-1 bg-white dark:bg-dark-background ">
       <AppHeader
         name="Johan Wekitem"
-        avatar={{ uri: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" }}
+        avatar={require("@/assets/images/avatar.jpg")}
+        onNotificationPress={() => router.push("/notification/notifications")}
       />
       <ScrollView
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
       >
-        <View className="py-5 mx-5">
+        <View className="py-5 mx-5  ">
           <SearchBar
             value={search}
             onChangeText={setSearch}
@@ -57,14 +57,14 @@ export default function HomeScreen() {
 
         {/* Inline Segmented Control */}
         <View className="mt-5 w-full items-center">
-          <View className="flex-row rounded-2xl dark:bg-dark-card border border-gray-100 dark:border-white/5 bg-gray-100 p-1 w-[80%] shadow-md dark:shadow-none">
+          <View className="flex-row rounded-2xl dark:bg-dark-card border border-gray-100 dark:border-white/5 bg-gray-100 p-1 w-[80%] dark:shadow-none">
             {HOME_TABS.map((tab, index) => {
               const isActive = activeTab === index;
               return (
                 <Pressable
                   key={tab}
                   className={`flex-1 items-center justify-center py-2 rounded-full ${
-                    isActive ? "bg-white shadow-sm dark:bg-gray-700" : "bg-transparent"
+                    isActive ? "bg-white  dark:bg-gray-700" : "bg-transparent"
                   }`}
                   onPress={() => setActiveTab(index)}
                 >
@@ -94,7 +94,9 @@ export default function HomeScreen() {
           <View>
             {displayedAssets.length === 0 ? (
               <View className="py-10 px-5 items-center justify-center">
-                <Text className="text-gray-500 dark:text-gray-400 font-medium">No assets found.</Text>
+                <Text className="text-gray-500 dark:text-gray-400 font-medium">
+                  No assets found.
+                </Text>
               </View>
             ) : (
               displayedAssets.map((item, index) => (
@@ -108,12 +110,12 @@ export default function HomeScreen() {
                     ${index === displayedAssets.length - 1 ? "border-b" : ""}
                   `}
                   >
-                    <AssetRow 
-                      asset={item} 
+                    <AssetRow
+                      asset={item}
                       onPress={() => {
                         setSelectedAsset(item);
                         router.push(`/stock/${item.ticker}`);
-                      }} 
+                      }}
                     />
                   </View>
                   {index < displayedAssets.length - 1 && (
@@ -127,13 +129,17 @@ export default function HomeScreen() {
 
         {activeTab === 1 && (
           <View className="py-10 px-5 items-center justify-center">
-            <Text className="text-gray-500 dark:text-gray-400 font-medium">News updates will appear here.</Text>
+            <Text className="text-gray-500 dark:text-gray-400 font-medium">
+              News updates will appear here.
+            </Text>
           </View>
         )}
 
         {activeTab === 2 && (
           <View className="py-10 px-5 items-center justify-center">
-            <Text className="text-gray-500 dark:text-gray-400 font-medium">Top Market statistics will appear here.</Text>
+            <Text className="text-gray-500 dark:text-gray-400 font-medium">
+              Top Market statistics will appear here.
+            </Text>
           </View>
         )}
       </ScrollView>

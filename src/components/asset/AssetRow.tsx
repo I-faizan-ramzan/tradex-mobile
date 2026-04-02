@@ -21,7 +21,7 @@ export function AssetRow({ asset, onPress, className = "" }: Props) {
       className={`flex-row items-center justify-between px-4 py-3 active:opacity-70 ${className}`} // ✅ fixed template literal + removed hardcoded border
     >
       {/* Left */}
-      <View className="flex-row items-center gap-2 flex-1">
+      <View className="flex-row items-center gap-2 flex-2">
         <Image
           source={asset.logo}
           className="w-12 h-12 rounded-full overflow-hidden"
@@ -44,7 +44,7 @@ export function AssetRow({ asset, onPress, className = "" }: Props) {
       </View>
 
       {/* Right */}
-      <View className="items-end">
+      <View className="items-start">
         <Text className="text-gray-900 dark:text-white font-semibold">
           {formatPrice(asset.price)}
         </Text>

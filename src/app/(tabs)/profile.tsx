@@ -5,9 +5,9 @@ import { SettingsList } from "@/components/profile/SettingsList";
 import { useTheme } from "@/hooks/use-theme";
 import { router } from "expo-router";
 import { CreditCard, HelpCircle, Lock, User } from "lucide-react-native";
-import { View, Modal, TouchableOpacity, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SETTINGS = [
   { label: "Profile Setting", icon: User, route: "/profile/settings" },
@@ -23,7 +23,7 @@ export default function ProfileScreen() {
   const handleLogOut = () => {
     setShowLogoutModal(false);
     // clear auth state here if you have it
-    router.replace("/(auth)/login");
+    router.replace("/(auth)/welcome");
   };
 
   return (
@@ -33,7 +33,7 @@ export default function ProfileScreen() {
       <TabHeader title="Profile" />
       {/* Avatar + info */}
       <ProfileHeader
-        avatarUrl="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
+        avatarUrl={require("@/assets/images/avatar.jpg")}
         name="Johan Wekitem"
         email="Johanwekitem@email.com"
         phone="+00742874082328"
@@ -41,22 +41,37 @@ export default function ProfileScreen() {
 
       {/* Settings */}
       <View className=" bg-card dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-white/5 overflow-hidden shadow-md dark:shadow-none mx-5">
-        <SettingsList title="Settings" onLogoutPress={() => setShowLogoutModal(true)} />
+        <SettingsList
+          title="Settings"
+          onLogoutPress={() => setShowLogoutModal(true)}
+        />
       </View>
 
       {/* Logout Modal */}
       <Modal visible={showLogoutModal} transparent animationType="fade">
         <View className="flex-1 bg-black/40 justify-center items-center">
           <View className="bg-white dark:bg-[#1C1C1E] w-[85%] rounded-3xl p-6 items-center shadow-lg">
-            <Text className="text-xl font-bold text-gray-900 dark:text-white mb-4 mt-2">Log Out</Text>
-            <Text className="text-gray-500 mb-8 text-center text-[15px]">Are you sure you want to leave</Text>
-            
-            <TouchableOpacity className="w-[90%] bg-[#1E50FF] py-3.5 rounded-full items-center mb-4" onPress={handleLogOut}>
+            <Text className="text-xl font-bold text-gray-900 dark:text-white mb-4 mt-2">
+              Log Out
+            </Text>
+            <Text className="text-gray-500 mb-8 text-center text-[15px]">
+              Are you sure you want to leave
+            </Text>
+
+            <TouchableOpacity
+              className="w-[90%] bg-[#1E50FF] py-3.5 rounded-full items-center mb-4"
+              onPress={handleLogOut}
+            >
               <Text className="text-white font-bold text-[15px]">Yes</Text>
             </TouchableOpacity>
-            
-            <TouchableOpacity className="w-[90%] bg-gray-200 dark:bg-[#2C2C2E] py-3.5 rounded-full items-center mb-2" onPress={() => setShowLogoutModal(false)}>
-              <Text className="text-gray-900 dark:text-white font-bold text-[15px]">No</Text>
+
+            <TouchableOpacity
+              className="w-[90%] bg-gray-200 dark:bg-[#2C2C2E] py-3.5 rounded-full items-center mb-2"
+              onPress={() => setShowLogoutModal(false)}
+            >
+              <Text className="text-gray-900 dark:text-white font-bold text-[15px]">
+                No
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
