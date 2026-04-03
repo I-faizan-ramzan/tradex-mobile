@@ -30,7 +30,12 @@ export default function ProfileScreen() {
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
       {/* Header */}
 
-      <TabHeader title="Profile" />
+      <TabHeader
+        title="Profile"
+        onRightPress={() => router.push("/(tabs)")}
+        iconName={"close-outline"}
+        color="red"
+      />
       {/* Avatar + info */}
       <ProfileHeader
         avatarUrl={require("@/assets/images/avatar.jpg")}

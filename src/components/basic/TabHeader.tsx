@@ -1,13 +1,15 @@
 import { useTheme } from "@/hooks/use-theme";
-import { Ionicons } from "@expo/vector-icons";
-import { Pressable, Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { AppIcon } from "../ui/AppIcon";
 
 type Props = {
+  color?: string;
+  iconName: any;
   title: string;
   onRightPress?: () => void;
 };
 
-export function TabHeader({ title, onRightPress }: Props) {
+export function TabHeader({ title, onRightPress, iconName, color }: Props) {
   const { isDark } = useTheme();
 
   const iconColor = isDark ? "#f0f2f7" : "#0a0c10";
@@ -20,19 +22,17 @@ export function TabHeader({ title, onRightPress }: Props) {
       </Text>
 
       {/* Right Section */}
-      <View className="flex-row items-center gap-2">
+      <TouchableOpacity
+        className="flex-row items-center gap-2"
+        onPress={onRightPress}
+      >
         {/* Theme Toggle */}
         {/* <ThemeToggle /> */}
 
         {/* Right Icon Button */}
-
-        <Pressable
-          onPress={onRightPress}
-          className="w-9 h-9 rounded-full  items-center justify-center"
-        >
-          <Ionicons name="menu-sharp" size={24} color={iconColor} />
-        </Pressable>
-      </View>
+        <></>
+        <AppIcon name={iconName} color={color} />
+      </TouchableOpacity>
     </View>
   );
 }

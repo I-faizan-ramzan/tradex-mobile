@@ -20,6 +20,7 @@ export default function WalletScreen() {
       <TabHeader
         title="Wallet"
         onRightPress={() => router.push("/(tabs)/profile")}
+        iconName={"menu-outline"}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}

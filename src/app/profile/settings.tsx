@@ -64,11 +64,13 @@ export default function ProfileSettingsScreen() {
           <View className="gap-4 pb-10">
             <View className="gap-4 pb-10">
               <FormButton
+                className="py-4"
                 label="Save"
                 variant="primary"
                 onPress={() => router.push("/(tabs)")}
               />
               <FormButton
+                className="py-4"
                 label="Cancel"
                 variant="secondary"
                 onPress={() => router.back()}

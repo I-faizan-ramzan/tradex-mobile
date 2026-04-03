@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Dimensions, View } from "react-native";
+import { Dimensions, Text, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 
-import { ASSETS } from "@/data/assets"; // ✅ import your assets
+import { ASSETS } from "@/data/assets";
 import { useStore } from "@/store/useStore";
 import { Asset } from "@/types/asset";
 import { router } from "expo-router";
@@ -33,13 +33,17 @@ export function AssetsCarousel({ autoPlay = true, interval = 5000 }: Props) {
     if (!autoPlay) return;
 
     const id = setInterval(() => {
-      let nextPage = pageIndex + 1;
-      if (nextPage >= totalPages) nextPage = 0;
-      scrollToPage(nextPage);
+      setPageIndex((prev) => {
+        let next = prev + 1;
+        if (next >= totalPages) next = 0;
+
+        scrollToPage(next);
+        return next;
+      });
     }, interval);
 
     return () => clearInterval(id);
-  }, [pageIndex]);
+  }, [autoPlay, interval, totalPages]);
 
   const scrollToPage = (page: number) => {
     const offset = page * (ITEM_WIDTH + SPACING) * ITEMS_PER_PAGE;
@@ -84,17 +88,34 @@ export function AssetsCarousel({ autoPlay = true, interval = 5000 }: Props) {
       />
 
       {/* Pagination */}
-      <View className="flex-row justify-center mt-4 gap-5">
-        {Array.from({ length: totalPages }).map((_, i) => (
-          <View
-            key={i}
-            className={`h-2 rounded-full ${
-              i === pageIndex
-                ? "w-4 bg-gray-900 dark:bg-gray-600 dark:bg-dark-background"
-                : "w-2 bg-gray-300 dark:bg-gray-600"
-            }`}
-          />
-        ))}
+      {/* Pagination */}
+      <View className="mt-4">
+        {/* Dots */}
+        <View className="flex-row justify-center gap-2">
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <TouchableOpacity
+              key={i}
+              onPress={() => scrollToPage(i)}
+              className={`h-2 rounded-full ${
+                i === pageIndex
+                  ? "w-4 bg-gray-900 dark:bg-white"
+                  : "w-2 bg-gray-300 dark:bg-gray-600"
+              }`}
+            />
+          ))}
+        </View>
+
+        {/* Skip */}
+        <View className="items-center mt-3">
+          <TouchableOpacity
+            onPress={() => {
+              const next = pageIndex + 1 >= totalPages ? 0 : pageIndex + 1;
+              scrollToPage(next);
+            }}
+          >
+            <Text className="text-accent font-medium">Skip</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

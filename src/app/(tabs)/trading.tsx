@@ -39,6 +39,7 @@ export default function TradingScreen() {
       <TabHeader
         title="Trading"
         onRightPress={() => router.push("/(tabs)/profile")}
+        iconName={"menu-outline"}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
