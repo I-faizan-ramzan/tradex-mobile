@@ -1,6 +1,7 @@
 import { FormButton } from "@/components/inputs/FormButton";
 import { FormInput } from "@/components/inputs/FormInput";
 import { ScreenHeader } from "@/components/profile/ScreenHeader";
+import { useDrawer } from "@/hooks/use-drawer";
 import { useTheme } from "@/hooks/use-theme";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -10,14 +11,14 @@ const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
 
 export default function ProfileSettingsScreen() {
   const { isDark } = useTheme();
-
+  const { openDrawer } = useDrawer();
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
       <ScreenHeader
         leftIcon={{ type: "fontawesome", name: "angle-left" }}
         title="Profile Setting"
         rightIcon={{ type: "ionicons", name: "menu-outline" }}
-        onRightPress={() => router.push("/(tabs)/profile")}
+        onRightPress={openDrawer}
         onLeftPress={() => router.back()}
       />
       <ScrollView className="flex-1 px-5 mt-4">
@@ -67,7 +68,7 @@ export default function ProfileSettingsScreen() {
                 className="py-4"
                 label="Save"
                 variant="primary"
-                onPress={() => router.push("/(tabs)")}
+                onPress={() => router.push("/(drawer)/(tabs)")}
               />
               <FormButton
                 className="py-4"

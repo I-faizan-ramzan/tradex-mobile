@@ -1,6 +1,7 @@
 import { FormButton } from "@/components/inputs/FormButton";
 import { FormInput } from "@/components/inputs/FormInput";
 import { ScreenHeader } from "@/components/profile/ScreenHeader";
+import { useDrawer } from "@/hooks/use-drawer";
 import { useTheme } from "@/hooks/use-theme";
 import { router } from "expo-router";
 import { Image, ScrollView, Text, View } from "react-native";
@@ -8,14 +9,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileSecurityScreen() {
   const { isDark } = useTheme();
-
+  const { openDrawer } = useDrawer();
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
       <ScreenHeader
         leftIcon={{ type: "fontawesome", name: "angle-left" }}
         title="Security"
         rightIcon={{ type: "ionicons", name: "menu-outline" }}
-        onRightPress={() => router.push("/(tabs)/profile")}
+        onRightPress={openDrawer}
         onLeftPress={() => router.back()}
       />
       <ScrollView className="flex-1 px-5 mt-4">
@@ -68,7 +69,7 @@ export default function ProfileSecurityScreen() {
             <FormButton
               label="Save"
               variant="primary"
-              onPress={() => router.push("/(tabs)")}
+              onPress={() => router.push("/(drawer)/(tabs)")}
               className="py-4"
             />
             <FormButton

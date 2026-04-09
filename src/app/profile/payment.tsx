@@ -1,4 +1,5 @@
 import { ScreenHeader } from "@/components/profile/ScreenHeader";
+import { useDrawer } from "@/hooks/use-drawer";
 import { useTheme } from "@/hooks/use-theme";
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -38,14 +39,14 @@ export default function ProfilePaymentMethodScreen() {
       <View className="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 bg-transparent items-center justify-center"></View>
     );
   };
-
+  const { openDrawer } = useDrawer();
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
       <ScreenHeader
         leftIcon={{ type: "fontawesome", name: "angle-left" }}
         title="Payment Method"
         rightIcon={{ type: "ionicons", name: "menu-outline" }}
-        onRightPress={() => router.push("/(tabs)/profile")}
+        onRightPress={openDrawer}
         onLeftPress={() => router.back()}
       />
 

@@ -16,6 +16,7 @@ export const Colors: { light: Theme; dark: Theme } = {
         "transparent",
       ],
       glowBottom: ["rgba(200,220,255,0.25)", "transparent"],
+      authBackground: ["#eef0f8", "#e8eaf6", "#dde0f0"],
     },
   },
 
@@ -29,6 +30,7 @@ export const Colors: { light: Theme; dark: Theme } = {
       base: ["#0a0c10", "#0f1218", "#151922"],
       glowTop: ["rgba(255,255,255,0.05)", "transparent"],
       glowBottom: ["rgba(79,142,247,0.15)", "transparent"],
+      authBackground: ["#0a0c10", "#0f1218", "#151922"], // ← same as base for dark
     },
   },
 };

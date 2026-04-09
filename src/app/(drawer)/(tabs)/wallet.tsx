@@ -1,6 +1,7 @@
 import { AssetRow } from "@/components/asset/AssetRow";
 import { TabHeader } from "@/components/basic/TabHeader";
 import { ASSETS } from "@/data/assets";
+import { useDrawer } from "@/hooks/use-drawer";
 import { useTheme } from "@/hooks/use-theme";
 import { useStore } from "@/store/useStore";
 import { Feather } from "@expo/vector-icons";
@@ -13,14 +14,15 @@ const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
 export default function WalletScreen() {
   const { isDark } = useTheme();
   const setSelectedAsset = useStore((state) => state.setSelectedAsset);
-
+  const { openDrawer } = useDrawer();
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
       {/* Header */}
       <TabHeader
         title="Wallet"
-        onRightPress={() => router.push("/(tabs)/profile")}
+        onRightPress={openDrawer}
         iconName={"menu-outline"}
+        color="white"
       />
       <ScrollView
         showsVerticalScrollIndicator={false}

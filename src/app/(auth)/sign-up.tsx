@@ -1,14 +1,9 @@
+import { FormInput } from "@/components/inputs/FormInput";
 import { useTheme } from "@/hooks/use-theme";
 import { FontAwesome } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
-import {
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignUpScreen() {
@@ -27,97 +22,31 @@ export default function SignUpScreen() {
         </Text>
 
         {/* Form Fields */}
-        <View className="mb-4">
-          <Text className="text-sm text-gray-500 dark:text-gray-300 mb-2 ml-1">
-            First Name
-          </Text>
-          <TextInput
-            placeholder="First Name"
-            placeholderTextColor="#6B7280"
-            className="w-full bg-gray-50 dark:bg-[#131313] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3.5 text-gray-900 dark:text-white"
-          />
-        </View>
-        <View className="mb-4">
-          <Text className="text-sm text-gray-500 dark:text-gray-300 mb-2 ml-1">
-            Last Name
-          </Text>
-          <TextInput
-            placeholder="Last Name"
-            placeholderTextColor="#6B7280"
-            className="w-full bg-gray-50 dark:bg-[#131313] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3.5 text-gray-900 dark:text-white"
-          />
-        </View>
-        <View className="mb-4">
-          <Text className="text-sm text-gray-500 dark:text-gray-300 mb-2 ml-1">
-            Username
-          </Text>
-          <TextInput
-            placeholder="Username"
-            placeholderTextColor="#6B7280"
-            className="w-full bg-gray-50 dark:bg-[#131313] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3.5 text-gray-900 dark:text-white"
-          />
-        </View>
-        <View className="mb-4">
-          <Text className="text-sm text-gray-500 dark:text-gray-300 mb-2 ml-1">
-            Email
-          </Text>
-          <TextInput
-            placeholder="Email"
-            placeholderTextColor="#6B7280"
-            className="w-full bg-gray-50 dark:bg-[#131313] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3.5 text-gray-900 dark:text-white"
-          />
-        </View>
-        <View className="mb-4">
-          <Text className="text-sm text-gray-500 dark:text-gray-300 mb-2 ml-1">
-            Phone Number
-          </Text>
-          <View className="w-full bg-gray-50 dark:bg-[#131313] border border-gray-200 dark:border-white/5 rounded-xl flex-row items-center px-4 py-1">
-            <Text className="text-gray-900 dark:text-white font-bold mr-4 my-2.5">
-              +1
-            </Text>
-            <TextInput
-              placeholder="Input text"
-              placeholderTextColor="#6B7280"
-              className="flex-1 text-gray-900 dark:text-white py-2.5"
-              keyboardType="phone-pad"
-            />
-          </View>
-        </View>
-        <View className="mb-4">
-          <Text className="text-sm text-gray-500 dark:text-gray-300 mb-2 ml-1">
-            Password
-          </Text>
-          <TextInput
-            placeholder="Password"
-            secureTextEntry
-            placeholderTextColor="#6B7280"
-            className="w-full bg-gray-50 dark:bg-[#131313] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3.5 text-gray-900 dark:text-white"
-          />
-        </View>
-        <View className="mb-6">
-          <Text className="text-sm text-gray-500 dark:text-gray-300 mb-2 ml-1">
-            Confirm Password
-          </Text>
-          <TextInput
-            placeholder="Confirm Password"
-            secureTextEntry
-            placeholderTextColor="#6B7280"
-            className="w-full bg-gray-50 dark:bg-[#131313] border border-gray-200 dark:border-white/5 rounded-xl px-4 py-3.5 text-gray-900 dark:text-white"
-          />
-        </View>
+        <FormInput label="First Name" placeholder="First Name" />
+        <FormInput label="Last Name" placeholder="Last Name" />
+        <FormInput label="Username" placeholder="Username" />
+        <FormInput label="Email" placeholder="Email" />
+
+        <FormInput label="Phone Number" placeholder="Phone Number" />
+        <FormInput label="Password" placeholder="Password" secureTextEntry />
+        <FormInput
+          label="Confirm Password"
+          placeholder="Confirm Password"
+          secureTextEntry
+        />
 
         {/* Terms agreement */}
-        <TouchableOpacity
-          className="flex-row items-center justify-center mb-8"
-          onPress={() => setAgree(!agree)}
-        >
-          <Text className="text-gray-500 dark:text-gray-300 text-sm mr-3 flex-shrink">
+        <View className="flex-row items-center justify-center mb-8">
+          <Text className="text-gray-500 dark:text-gray-300 text-sm mr-3">
             I agree to all Term, Privacy Policy and fees
           </Text>
-          <View className="w-5 h-5 rounded-full border border-gray-400 items-center justify-center bg-white flex-shrink-0">
+          <TouchableOpacity
+            onPress={() => setAgree(!agree)}
+            className="w-5 h-5 rounded-full border border-gray-400 items-center justify-center bg-white"
+          >
             {agree && <View className="w-3 h-3 rounded-full bg-black" />}
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
 
         {/* Social Buttons */}
         <View className="gap-3 mb-8">
@@ -156,6 +85,16 @@ export default function SignUpScreen() {
               Continue with Facebook
             </Text>
           </TouchableOpacity>
+          <View className="flex-row justify-center mt-6">
+            <Text className="text-gray-500 dark:text-gray-300 text-sm">
+              Already have an account?{" "}
+            </Text>
+            <TouchableOpacity onPress={() => router.push("/(auth)/login")}>
+              <Text className="text-[#1E50FF] text-sm font-semibold">
+                Login
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View className="flex-row gap-4 mt-2">

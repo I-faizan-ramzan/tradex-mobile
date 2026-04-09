@@ -4,7 +4,7 @@ import { AppIcon } from "../ui/AppIcon";
 
 type Props = {
   color?: string;
-  iconName: any;
+  iconName?: any;
   title: string;
   onRightPress?: () => void;
 };
@@ -30,8 +30,8 @@ export function TabHeader({ title, onRightPress, iconName, color }: Props) {
         {/* <ThemeToggle /> */}
 
         {/* Right Icon Button */}
-        <></>
-        <AppIcon name={iconName} color={color} />
+
+        <AppIcon name={iconName} color={iconColor} />
       </TouchableOpacity>
     </View>
   );

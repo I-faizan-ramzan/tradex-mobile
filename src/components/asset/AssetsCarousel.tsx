@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { Dimensions, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 
+import { Colors } from "@/constants/theme";
 import { ASSETS } from "@/data/assets";
+import { useTheme } from "@/hooks/use-theme";
 import { useStore } from "@/store/useStore";
 import { Asset } from "@/types/asset";
 import { router } from "expo-router";
+import { AppIcon } from "../ui/AppIcon";
 import { AssetItem } from "./AssetItem";
 
 const { width } = Dimensions.get("window");
@@ -50,9 +53,26 @@ export function AssetsCarousel({ autoPlay = true, interval = 5000 }: Props) {
     listRef.current?.scrollToOffset({ offset, animated: true });
     setPageIndex(page);
   };
-
+  const { isDark } = useTheme();
+  const theme = Colors[isDark ? "dark" : "light"];
   return (
     <View>
+      {/* Skip */}
+      <View className="items-end  mx-5">
+        <TouchableOpacity
+          onPress={() => {
+            const next = pageIndex + 1 >= totalPages ? 0 : pageIndex + 1;
+            scrollToPage(next);
+          }}
+        >
+          <AppIcon
+            library="MaterialIcons"
+            name={"arrow-right"}
+            color={isDark ? "#fff" : "#000"}
+            size={30}
+          />
+        </TouchableOpacity>
+      </View>
       <Animated.FlatList
         ref={listRef}
         data={loopData}
@@ -103,18 +123,6 @@ export function AssetsCarousel({ autoPlay = true, interval = 5000 }: Props) {
               }`}
             />
           ))}
-        </View>
-
-        {/* Skip */}
-        <View className="items-center mt-3">
-          <TouchableOpacity
-            onPress={() => {
-              const next = pageIndex + 1 >= totalPages ? 0 : pageIndex + 1;
-              scrollToPage(next);
-            }}
-          >
-            <Text className="text-accent font-medium">Skip</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </View>

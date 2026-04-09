@@ -9,5 +9,6 @@ export type Theme = {
     base: string[];
     glowTop: string[];
     glowBottom: string[];
+    authBackground: string[];
   };
 };

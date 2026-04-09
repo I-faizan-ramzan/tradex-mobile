@@ -1,6 +1,7 @@
 import { TabHeader } from "@/components/basic/TabHeader";
 import { ProfileHeader } from "@/components/profile/ProfileHeader";
 import { SettingsList } from "@/components/profile/SettingsList";
+import { useDrawer } from "@/hooks/use-drawer";
 
 import { useTheme } from "@/hooks/use-theme";
 import { router } from "expo-router";
@@ -25,16 +26,16 @@ export default function ProfileScreen() {
     // clear auth state here if you have it
     router.replace("/(auth)/welcome");
   };
-
+  const { openDrawer } = useDrawer();
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
       {/* Header */}
 
       <TabHeader
         title="Profile"
-        onRightPress={() => router.push("/(tabs)")}
-        iconName={"close-outline"}
-        color="red"
+        // onRightPress={() => router.push("/(drawer)/(tabs)")}
+        // iconName={"close-outline"}
+        color="white"
       />
       {/* Avatar + info */}
       <ProfileHeader

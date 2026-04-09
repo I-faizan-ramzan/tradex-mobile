@@ -7,6 +7,7 @@ import { SegmentCard } from "./SegmentCard";
 export type Option = {
   value: string;
   label: string;
+  title?: string;
   icon: string;
 };
 

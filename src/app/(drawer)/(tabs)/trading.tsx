@@ -3,6 +3,7 @@ import { TabHeader } from "@/components/basic/TabHeader";
 import { SegmentSelector } from "@/components/trading/favorite/SegmentSelector";
 
 import { ASSETS } from "@/data/assets";
+import { useDrawer } from "@/hooks/use-drawer";
 import { useTheme } from "@/hooks/use-theme";
 import { useStore } from "@/store/useStore";
 import { Feather } from "@expo/vector-icons";
@@ -13,32 +14,41 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const SlidersHorizontal = (props: any) => <Feather name="sliders" {...props} />;
 
 export default function TradingScreen() {
-  const [active, setActive] = useState("favorites");
+  const [active, setActive] = useState("all");
   const { isDark } = useTheme();
   const setSelectedAsset = useStore((state) => state.setSelectedAsset);
+  const { openDrawer } = useDrawer();
+  const titleMap = {
+    all: "All Assets",
+    favorite: "Favorites",
+    major: "Top Market",
+  };
   const options = [
     {
       label: "All",
-      value: "deposit",
+      title: "All Assets",
+      value: "all",
       icon: "home-outline",
     },
     {
       label: "Favorite",
+      title: "Favorites",
       value: "favorite",
       icon: "star-outline",
     },
     {
       label: "Major",
+      title: "Top Market",
       value: "major",
-      icon: "caret-down",
+      icon: "arrow-up-right-box-outline",
     },
   ];
-
+  const activeOption = options.find((opt) => opt.value === active);
   return (
     <SafeAreaView className="flex-1 bg-white dark:bg-dark-background">
       <TabHeader
         title="Trading"
-        onRightPress={() => router.push("/(tabs)/profile")}
+        onRightPress={openDrawer}
         iconName={"menu-outline"}
       />
       <ScrollView
@@ -60,7 +70,7 @@ export default function TradingScreen() {
         {/* Assets list */}
         <View className="mt-2 pb-5">
           <Text className="px-5 text-lg font-semibold text-gray-900 dark:text-white mb-4">
-            Top Market
+            {activeOption?.title}
           </Text>
           <View className="mb-2">
             {ASSETS.map((asset, index) => (
